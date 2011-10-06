@@ -8,6 +8,12 @@ solution "helmet"
 		kind "WindowedApp"
 		language "C++"
 		files { "src/main/**.h", "src/main/**.cpp" }
+		
+	project "test"
+		kind "ConsoleApp"
+		language "C++"
+		files { "src/text/**.h", "src/text/**.cpp" }
+		targetdir "target/bin/test"
  
 	configuration "debug"
 		defines { "_DEBUG" }
