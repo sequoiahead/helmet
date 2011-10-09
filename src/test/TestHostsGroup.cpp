@@ -1,14 +1,59 @@
-#include "../main/state/HostsGroup.h"
-#include <cppunit/ui/text/TestRunner.h>
+#include <state/HostsGroup.h>
+#include <cppunit/TestFixture.h>
+#include <cppunit/TestAssert.h>
+#include <cppunit/extensions/HelperMacros.h>
 
-class TestHostsGroup : public CppUnit::TestCase {
+namespace helmet {
+
+class TestHostsGroup: public CppUnit::TestFixture {
+
+CPPUNIT_TEST_SUITE( TestHostsGroup );
+		CPPUNIT_TEST( testConstructor );
+		CPPUNIT_TEST( testAddRemove );
+	CPPUNIT_TEST_SUITE_END();
+
 public:
-	TestHostsGroup(std::string name) :
-			CppUnit::TestCase(name) {
+	static IpAddress IP_ADDR;
+	static Hostname HOSTNAME1;
+	static Hostname HOSTNAME2;
+
+	void setUp() {
+		group = new HostsGroup(IP_ADDR);
 	}
 
-	void runTest() {
-		CPPUNIT_ASSERT(Complex(10, 1) == Complex(10, 1));
-		CPPUNIT_ASSERT(!(Complex(1, 1) == Complex(2, 2)));
+	void tearDown() {
+		delete group;
 	}
+
+	void testConstructor() {
+		CPPUNIT_ASSERT(group->getIpAddress() == IP_ADDR);
+	}
+
+	void testAddRemove() {
+		group->addHostname(HOSTNAME1);
+		group->addHostname(HOSTNAME2);
+
+		CPPUNIT_ASSERT(group->getHostnames().front() == HOSTNAME1);
+		CPPUNIT_ASSERT(group->getHostnames().back() == HOSTNAME2);
+
+		group->removeHostname(HOSTNAME1);
+
+		CPPUNIT_ASSERT(group->getHostnames().front() == HOSTNAME2);
+		CPPUNIT_ASSERT(group->getHostnames().back() == HOSTNAME2);
+
+		group->removeHostname(HOSTNAME2);
+
+		CPPUNIT_ASSERT(group->getHostnames().empty());
+	}
+
+private:
+	HostsGroup* group;
 };
+
+IpAddress TestHostsGroup::IP_ADDR = "127.0.0.1";
+Hostname TestHostsGroup::HOSTNAME1 = "localhost";
+Hostname TestHostsGroup::HOSTNAME2 = "example.net";
+
+CPPUNIT_TEST_SUITE_REGISTRATION( TestHostsGroup);
+
+}

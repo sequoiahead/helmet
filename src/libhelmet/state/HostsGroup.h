@@ -9,9 +9,13 @@ namespace helmet {
 class HostsGroup {
 public:
 	explicit HostsGroup(const IpAddress&);
-	void addHostname(const Hostname);
+
+	void addHostname(const Hostname&);
 	void removeHostname(const Hostname&);
-	std::list<Hostname> getHostnames() const;
+
+	const std::list<Hostname>& getHostnames() const;
+	const IpAddress& getIpAddress() const;
+
 	virtual ~HostsGroup();
 private:
 	IpAddress ipAddress;

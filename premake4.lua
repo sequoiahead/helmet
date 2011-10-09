@@ -1,28 +1,51 @@
--- A solution contains projects, and defines the available configurations
+DIR_TARGET = "target"  
+DIR_BIN_DEBUG = DIR_TARGET .. "/debug/bin" 
+DIR_BIN_RELEASE = DIR_TARGET .. "/release/bin" 
+DIR_LIB_DEBUG = DIR_TARGET .. "/debug/lib" 
+DIR_LIB_RELEASE = DIR_TARGET .. "/release/lib" 
+
 solution "helmet"
 	configurations { "debug", "release" }
-	location "target/build"
- 
-	-- A project defines one build target
-	project "helmet"
+	flags { "FatalWarnings", "ExtraWarnings" }
+	location (DIR_TARGET)
+	
+	configuration { "debug" }
+		defines { "_DEBUG" }
+		flags { "Symbols" }
+		libdirs { (DIR_LIB_DEBUG .. "/**") }
+		targetdir (DIR_BIN_DEBUG)
+		
+	configuration { "release" }
+		defines { "_RELEASE" }
+		flags { "OptimizeSpeed" }
+		libdirs { (DIR_LIB_RELEASE .. "/**") }
+		targetdir (DIR_BIN_RELEASE)
+		
+	project "helmet-main"
 		kind "WindowedApp"
 		language "C++"
+		targetname "helmet"
 		files { "src/main/**.h", "src/main/**.cpp" }
+		links { "helmet" }
+				
+	project "helmet" 
+		kind "StaticLib"
+		language "C++"
+		files { "src/libhelmet/**.h", "src/libhelmet/**.cpp" }
 		
-	project "test"
+	configuration { "debug" }
+		targetdir (DIR_LIB_DEBUG)
+		
+	configuration { "release" }
+		targetdir (DIR_LIB_RELEASE)
+
+	project "test_libhelmet"
 		kind "ConsoleApp"
 		language "C++"
-		files { "src/text/**.h", "src/text/**.cpp" }
-		targetdir "target/bin/test"
- 
-	configuration "debug"
-		defines { "_DEBUG" }
-		targetdir "target/bin/debug"
- 
-	configuration "release"
-		defines { "_RELEASE" }
-		targetdir "target/bin/release"
-
+		includedirs { "src/libhelmet" }
+		files { "src/test/**.h", "src/test/**.cpp" }
+		links { "helmet", "cppunit" }
+		
 if _ACTION == "clean" then
-	os.rmdir("target")
+	os.rmdir(DIR_TARGET)
 end
