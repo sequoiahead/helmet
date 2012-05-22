@@ -1,4 +1,4 @@
-#include <state/HostsGroup.h>
+#include <domain/HostsGroupMapping.h>
 #include <cppunit/TestFixture.h>
 #include <cppunit/TestAssert.h>
 #include <cppunit/extensions/HelperMacros.h>
@@ -18,7 +18,7 @@ public:
 	static Hostname HOSTNAME2;
 
 	void setUp() {
-		group = new HostsGroup(IP_ADDR);
+		group = new HostsGroupMapping(IP_ADDR);
 	}
 
 	void tearDown() {
@@ -47,7 +47,7 @@ public:
 	}
 
 private:
-	HostsGroup* group;
+	HostsGroupMapping* group;
 };
 
 IpAddress TestHostsGroup::IP_ADDR = "127.0.0.1";

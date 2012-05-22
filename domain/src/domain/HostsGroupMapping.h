@@ -1,14 +1,14 @@
 #ifndef HOSTSGROUP_H_
 #define HOSTSGROUP_H_
 
-#include "state.h"
+#include "domain.h"
 #include <list>
 
 namespace helmet {
 
-class HostsGroup {
+class HostsGroupMapping {
 public:
-	explicit HostsGroup(const IpAddress&);
+	explicit HostsGroupMapping(const IpAddress&);
 
 	void addHostname(const Hostname&);
 	void removeHostname(const Hostname&);
@@ -16,7 +16,7 @@ public:
 	const std::list<Hostname>& getHostnames() const;
 	const IpAddress& getIpAddress() const;
 
-	virtual ~HostsGroup();
+	virtual ~HostsGroupMapping();
 private:
 	IpAddress ipAddress;
 	std::list<Hostname> hostnames;
