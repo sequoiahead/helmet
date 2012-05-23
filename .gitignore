@@ -4,5 +4,4 @@ target/
 .classpath
 .externalToolBuilders/
 .project
-.ecut-sources/
 *~

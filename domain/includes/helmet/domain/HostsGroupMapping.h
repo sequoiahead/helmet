@@ -1,7 +1,8 @@
 #ifndef HOSTSGROUP_H_
 #define HOSTSGROUP_H_
 
-#include "domain.h"
+#include <helmet/domain.h>
+
 #include <list>
 
 namespace helmet {

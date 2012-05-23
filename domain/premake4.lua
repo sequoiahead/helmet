@@ -1,7 +1,8 @@
 	project "domain" 
-		kind "SharedLib"
+		kind "StaticLib"
 		language "C++"
 		targetname "helmet"
+		includedirs { "includes/" }
 		files { "src/**.h", "src/**.cpp" }
 		
 	configuration { "debug" }
@@ -13,6 +14,6 @@
 	project "domain-test"
 		kind "ConsoleApp"
 		language "C++"
-		includedirs { "src/" }
+		includedirs { "includes/" }
 		files { "test/**.h", "test/**.cpp" }
 		links { "domain", "cppunit" }

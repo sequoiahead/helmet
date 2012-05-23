@@ -1,5 +1,5 @@
-#ifndef STATE_H_
-#define STATE_H_
+#ifndef MODEL_H_
+#define MODEL_H_
 
 #include <string>
 

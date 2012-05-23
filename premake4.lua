@@ -1,4 +1,4 @@
-DIR_TARGET = os.getcwd() .. "/target"  
+DIR_TARGET = os.getcwd() .. "/target"
 DIR_BIN_DEBUG = DIR_TARGET .. "/debug/bin" 
 DIR_BIN_RELEASE = DIR_TARGET .. "/release/bin" 
 DIR_LIB_DEBUG = DIR_TARGET .. "/debug/lib" 

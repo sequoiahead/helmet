@@ -1,4 +1,4 @@
-#include "HostsGroupMapping.h"
+#include <helmet/domain/HostsGroupMapping.h>
 
 namespace helmet {
 
