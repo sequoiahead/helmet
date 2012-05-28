@@ -14,14 +14,14 @@
 
 namespace helmet {
 
-template <typename Item>
+template<typename Item>
 class Group {
 public:
 	typedef std::list<Item> Container;
 	typedef typename Container::const_iterator IteratorConst;
 
-	explicit Group(const std::string& name)
-			: name(name), container() {
+	explicit Group(const std::string& name) :
+			name(name), container() {
 	}
 
 	virtual ~Group() {
@@ -37,11 +37,11 @@ public:
 		}
 	}
 
-	virtual void remove(const Item& item) {
+	inline void remove(const Item& item) {
 		container.remove(item);
 	}
 
-	virtual bool contains(const Item& item) const {
+	inline bool contains(const Item& item) const {
 		return std::find(begin(), end(), item) != end();
 	}
 
@@ -53,7 +53,7 @@ public:
 		return container.end();
 	}
 
-	virtual bool empty() const {
+	inline bool empty() const {
 		return container.empty();
 	}
 
@@ -68,6 +68,5 @@ private:
 };
 
 }
-
 
 #endif /* GROUP_H_ */

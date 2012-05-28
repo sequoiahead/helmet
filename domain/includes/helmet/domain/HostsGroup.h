@@ -17,11 +17,9 @@ class HostsGroup: public Group<Hostname> {
 public:
 	explicit HostsGroup(const std::string& name) :
 			Group(name) {
-
 	}
 
 	virtual ~HostsGroup() {
-
 	}
 };
 

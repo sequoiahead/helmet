@@ -15,11 +15,11 @@ namespace helmet {
 
 class AddressGroup: public Group<IpAddress> {
 public:
-	explicit AddressGroup(const std::string& name) {
-
+	explicit AddressGroup(const std::string& name) :
+			Group(name) {
 	}
-	virtual ~AddressGroup() {
 
+	virtual ~AddressGroup() {
 	}
 };
 
