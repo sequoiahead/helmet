@@ -9,7 +9,8 @@
 
 namespace helmet {
 
-Mapping::Mapping(const HostsGroup& hosts, const AddressGroup& addresses) {
+Mapping::Mapping(const HostsGroup& hosts, const AddressGroup& addresses) :
+		hosts(hosts), addresses(addresses), container() {
 
 }
 
