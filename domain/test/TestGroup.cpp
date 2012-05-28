@@ -68,10 +68,10 @@ private:
 	HostsGroup* group;
 };
 
-Hostname TestGroup::GROUP_NAME = "group_name";
-Hostname TestGroup::HOSTNAME1 = "localhost";
-Hostname TestGroup::HOSTNAME2 = "example.net";
-Hostname TestGroup::HOSTNAME3 = "example.org";
+std::string TestGroup::GROUP_NAME = "group_name";
+Hostname TestGroup::HOSTNAME1("localhost");
+Hostname TestGroup::HOSTNAME2("example.net");
+Hostname TestGroup::HOSTNAME3("example.org");
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TestGroup);
 

@@ -18,27 +18,47 @@ namespace helmet {
 class Mapping {
 public:
 
-	typedef std::multimap<const IpAddress&, const Hostname&> Container;
+	typedef std::multimap<const IpAddress, const Hostname> Container;
 	typedef Container::const_iterator IteratorConst;
+	typedef Container::iterator Iterator;
 
-	Mapping(const HostsGroup& hosts, const AddressGroup& addresses);
-	virtual ~Mapping();
-
-	inline void map(const Hostname& host, const IpAddress& address) {
-		container.insert(std::pair<const IpAddress&, const Hostname&>(host, address));
+	inline explicit Mapping(const HostsGroup& hosts, const AddressGroup& addresses) :
+			hosts(hosts), addrs(addresses), container() {
 	}
 
-	void remove(const Hostname& host);
-	void remove(const IpAddress& address);
-
-	inline std::pair<IteratorConst,IteratorConst> getMap(const IpAddress& address) const {
-		return container.equal_range(address);
+	inline virtual ~Mapping() {
 	}
+
+	inline void map(Hostname& host, IpAddress& addr) {
+		doMap(host, addr);
+	}
+
+	inline void map(IpAddress& addr, Hostname& host) {
+		doMap(host, addr);
+	}
+
+	inline std::pair<IteratorConst,IteratorConst> getMap(const IpAddress& addr) const {
+		return container.equal_range(addr);
+	}
+
+	inline const AddressGroup& getAddressGroup() {
+		return addrs;
+	}
+
+	inline const HostsGroup& getHostsGroup() {
+		return hosts;
+	}
+
+	void remove(IpAddress& addr);
+
+	void remove(Hostname& host);
 
 private:
 
+	void doMap(Hostname& host, IpAddress& addr);
+
 	HostsGroup hosts;
-	AddressGroup addresses;
+	AddressGroup addrs;
 	Container container;
 };
 
