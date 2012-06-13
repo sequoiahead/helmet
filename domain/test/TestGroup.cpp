@@ -1,4 +1,5 @@
-#include <helmet/domain/HostsGroup.h>
+#include <helmet/mapping/HostsGroup.h>
+#include <helmet/mapping/AddressGroup.h>
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/TestAssert.h>
@@ -9,10 +10,11 @@ namespace helmet {
 class TestGroup: public CppUnit::TestFixture {
 
 CPPUNIT_TEST_SUITE( TestGroup );
-		CPPUNIT_TEST( testConstructor );
-		CPPUNIT_TEST( testAddRemove );
-		CPPUNIT_TEST( testDoubleAdd );
-	CPPUNIT_TEST_SUITE_END();
+	CPPUNIT_TEST( testConstructor );
+	CPPUNIT_TEST( testAddrGroupConstructor );
+	CPPUNIT_TEST( testAddRemove );
+	CPPUNIT_TEST( testDoubleAdd );
+CPPUNIT_TEST_SUITE_END();
 
 public:
 	static std::string GROUP_NAME;
@@ -21,51 +23,57 @@ public:
 	static Hostname HOSTNAME3;
 
 	void setUp() {
-		group = new HostsGroup(GROUP_NAME);
+		groupHosts = new HostsGroup(GROUP_NAME);
 	}
 
 	void tearDown() {
-		delete group;
+		delete groupHosts;
 	}
 
 	void testConstructor() {
-		CPPUNIT_ASSERT(group->getName() == GROUP_NAME);
-		CPPUNIT_ASSERT(group->empty());
+		CPPUNIT_ASSERT(groupHosts->name == GROUP_NAME);
+		CPPUNIT_ASSERT(groupHosts->isEmpty());
+	}
+
+	void testAddrGroupConstructor() {
+		AddressGroup addrGroup(GROUP_NAME);
+		CPPUNIT_ASSERT(addrGroup.name == GROUP_NAME);
+		CPPUNIT_ASSERT(addrGroup.isEmpty());
 	}
 
 	void testAddRemove() {
-		group->add(HOSTNAME1);
-		group->add(HOSTNAME2);
+		groupHosts->add(HOSTNAME1);
+		groupHosts->add(HOSTNAME2);
 
-		CPPUNIT_ASSERT(!group->empty());
+		CPPUNIT_ASSERT(!groupHosts->isEmpty());
 
-		for (HostsGroup::IteratorConst it = group->begin(); it != group->end(); it++) {
+		for (HostsGroup::IteratorConst it = groupHosts->begin(); it != groupHosts->end(); it++) {
 			CPPUNIT_ASSERT(*it == HOSTNAME1 || *it == HOSTNAME2);
 		}
 
-		group->remove(HOSTNAME1);
+		groupHosts->remove(HOSTNAME1);
 
-		CPPUNIT_ASSERT(*group->begin() == HOSTNAME2);
+		CPPUNIT_ASSERT(*groupHosts->begin() == HOSTNAME2);
 
-		group->remove(HOSTNAME2);
+		groupHosts->remove(HOSTNAME2);
 
-		CPPUNIT_ASSERT(group->empty());
+		CPPUNIT_ASSERT(groupHosts->isEmpty());
 	}
 
 	void testDoubleAdd() {
-		group->add(HOSTNAME1);
-		group->add(HOSTNAME2);
-		group->add(HOSTNAME2);
+		groupHosts->add(HOSTNAME1);
+		groupHosts->add(HOSTNAME2);
+		groupHosts->add(HOSTNAME2);
 
-		CPPUNIT_ASSERT(group->contains(HOSTNAME1));
-		CPPUNIT_ASSERT(group->contains(HOSTNAME2));
-		CPPUNIT_ASSERT(!group->contains(HOSTNAME3));
+		CPPUNIT_ASSERT(groupHosts->contains(HOSTNAME1));
+		CPPUNIT_ASSERT(groupHosts->contains(HOSTNAME2));
+		CPPUNIT_ASSERT(!groupHosts->contains(HOSTNAME3));
 
-		CPPUNIT_ASSERT(group->size() == 2);
+		CPPUNIT_ASSERT(groupHosts->size() == 2);
 	}
 
 private:
-	HostsGroup* group;
+	HostsGroup* groupHosts;
 };
 
 std::string TestGroup::GROUP_NAME = "group_name";
@@ -73,6 +81,6 @@ Hostname TestGroup::HOSTNAME1("localhost");
 Hostname TestGroup::HOSTNAME2("example.net");
 Hostname TestGroup::HOSTNAME3("example.org");
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TestGroup);
+CPPUNIT_TEST_SUITE_REGISTRATION( TestGroup );
 
 }
