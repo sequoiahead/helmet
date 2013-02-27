@@ -1,7 +1,2 @@
-target/
-.cproject
-.settings
-.classpath
-.externalToolBuilders/
-.project
 *~
+/build
