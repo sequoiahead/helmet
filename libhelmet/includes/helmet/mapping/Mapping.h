@@ -30,9 +30,12 @@ public:
 	void map(const Hostname& host, const IpAddress& addr);
 	void map(const IpAddress& addr, const Hostname& host);
 
-	HostnamesIteratorConstPair getHostnames(const IpAddress& addr) const throw (std::exception);
+	/**
+	 * @throw std::exception
+	 */
+	HostnamesIteratorConstPair getHostnames(const IpAddress& addr) const;
 	HostnamesIteratorConstPair getHostnamesUnmapped() const;
-	std::size_t count(const IpAddress& addr) const throw();
+	std::size_t count(const IpAddress& addr) const;
 
 	void unmap(const IpAddress& addr);
 	void unmap(const Hostname& host);

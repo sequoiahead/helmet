@@ -12,8 +12,8 @@
 
 namespace helmet {
 
-Mapping::Mapping(const HostsGroup& hosts, const AddressGroup& addresses) :
-		addressGroup(addresses), hostsGroup(hosts), container() {
+Mapping::Mapping(const HostsGroup& hosts, const AddressGroup& addresses)
+		: addressGroup(addresses), hostsGroup(hosts), container() {
 	unmapped.insert(unmapped.begin(), hosts.begin(), hosts.end());
 }
 
@@ -23,7 +23,7 @@ Mapping::~Mapping() {
 	}
 }
 
-std::size_t Mapping::count(const IpAddress& addr) const throw() {
+std::size_t Mapping::count(const IpAddress& addr) const {
 	size_t count;
 	try {
 		HostnamesIteratorConstPair pair = getHostnames(addr);
@@ -34,7 +34,7 @@ std::size_t Mapping::count(const IpAddress& addr) const throw() {
 	return count;
 }
 
-Mapping::HostnamesIteratorConstPair Mapping::getHostnames(const IpAddress& addr) const throw (std::exception) {
+Mapping::HostnamesIteratorConstPair Mapping::getHostnames(const IpAddress& addr) const {
 	ContainerIteratorConst addrIt = container.find(addr);
 	if (addrIt == container.end()) {
 		std::exception e;
@@ -48,7 +48,7 @@ Mapping::HostnamesIteratorConstPair Mapping::getHostnamesUnmapped() const {
 }
 
 void Mapping::unmap(const Hostname& host) {
-	for (Container::iterator it = container.begin(); it != container.end(); it++ ) {
+	for (Container::iterator it = container.begin(); it != container.end(); it++) {
 		Hostnames& list = it->second;
 		HostnamesIterator hIt = std::find(list.begin(), list.end(), host);
 		if (hIt != list.end()) {

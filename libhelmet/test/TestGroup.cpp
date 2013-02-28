@@ -7,14 +7,14 @@
 
 namespace helmet {
 
-class TestGroup: public CppUnit::TestFixture {
+class TestGroup : public CppUnit::TestFixture {
 
-CPPUNIT_TEST_SUITE( TestGroup );
-	CPPUNIT_TEST( testConstructor );
-	CPPUNIT_TEST( testAddrGroupConstructor );
-	CPPUNIT_TEST( testAddRemove );
-	CPPUNIT_TEST( testDoubleAdd );
-CPPUNIT_TEST_SUITE_END();
+	CPPUNIT_TEST_SUITE( TestGroup );
+		CPPUNIT_TEST( testConstructor);
+		CPPUNIT_TEST( testAddrGroupConstructor);
+		CPPUNIT_TEST( testAddRemove);
+		CPPUNIT_TEST( testDoubleAdd);
+	CPPUNIT_TEST_SUITE_END();
 
 public:
 	static std::string GROUP_NAME;
@@ -81,6 +81,6 @@ Hostname TestGroup::HOSTNAME1("localhost");
 Hostname TestGroup::HOSTNAME2("example.net");
 Hostname TestGroup::HOSTNAME3("example.org");
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TestGroup );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestGroup);
 
 }

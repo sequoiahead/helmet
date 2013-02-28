@@ -1,4 +1,4 @@
-	project "domain" 
+	project "libhelmet" 
 		kind "StaticLib"
 		language "C++"
 		targetname "helmet"
@@ -11,9 +11,9 @@
 	configuration { "release" }
 		targetdir (DIR_LIB_RELEASE)
 		
-	project "domain-test"
+	project "libhelmet-test"
 		kind "ConsoleApp"
 		language "C++"
 		includedirs { "includes/" }
 		files { "test/**.h", "test/**.cpp" }
-		links { "domain", "cppunit" }
+		links { "libhelmet", "cppunit" }

@@ -12,16 +12,14 @@ solution "helmet"
 	configuration { "debug" }
 		defines { "_DEBUG" }
 		flags { "Symbols" }
-		libdirs { (DIR_LIB_DEBUG .. "/**") }
 		targetdir (DIR_BIN_DEBUG)
 		
 	configuration { "release" }
 		defines { "_RELEASE" }
 		flags { "OptimizeSpeed" }
-		libdirs { (DIR_LIB_RELEASE .. "/**") }
 		targetdir (DIR_BIN_RELEASE)
 	
-	include "domain"
+	include "libhelmet"
 	include "ui-cli"
 	include "ui-gtk"
 
@@ -35,8 +33,7 @@ newaction {
    execute = function ()
       local ide_resources = {".cproject", ".settings/", ".classpath", ".externalToolBuilders/", ".project"}
 		for i,res in ipairs(ide_resources) do
-			print(res) 
-			--os.rmdir(res)
+			os.rmdir(res)
 		end
    end
 }
