@@ -1,5 +1,5 @@
-#ifndef TYPES_H_
-#define TYPES_H_
+#ifndef HELMET_TYPES_H_
+#define HELMET_TYPES_H_
 
 #include <string>
 
@@ -16,13 +16,21 @@ public:
 };
 
 inline Hostname::Hostname(const std::string& hostname) :
-		std::string(hostname) {
+	std::string(hostname) {
 }
 
 inline IpAddress::IpAddress(const std::string& ipaddr) :
-		std::string(ipaddr) {
+	std::string(ipaddr) {
+}
+
+inline IpAddress operator"" _a(const char* str, size_t n) {
+    return IpAddress(str);
+}
+
+inline Hostname operator"" _h(const char* str, size_t n) {
+    return Hostname(str);
 }
 
 }  // namespace helmet
 
-#endif /* TYPES_H_ */
+#endif /* HELMET_TYPES_H_ */

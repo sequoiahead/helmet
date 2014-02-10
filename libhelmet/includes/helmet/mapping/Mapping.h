@@ -1,10 +1,3 @@
-/*
- * Mapping.h
- *
- *  Created on: May 24, 2012
- *      Author: sequoiahead
- */
-
 #ifndef MAPPING_H_
 #define MAPPING_H_
 
@@ -22,7 +15,6 @@ public:
 	typedef std::list<Hostname> Hostnames;
 	typedef Hostnames::const_iterator HostnamesIteratorConst;
 	typedef Hostnames::iterator HostnamesIterator;
-	typedef std::pair<HostnamesIteratorConst, HostnamesIteratorConst> HostnamesIteratorConstPair;
 
 	explicit Mapping(const HostsGroup& hosts, const AddressGroup& addresses);
 	virtual ~Mapping();
@@ -33,16 +25,17 @@ public:
 	/**
 	 * @throw std::exception
 	 */
-	HostnamesIteratorConstPair getHostnames(const IpAddress& addr) const;
-	HostnamesIteratorConstPair getHostnamesUnmapped() const;
+	const Hostnames& getHostnames(const IpAddress& addr) const;
+	const Hostnames& getHostnamesUnmapped() const;
 	std::size_t count(const IpAddress& addr) const;
 
 	void unmap(const IpAddress& addr);
 	void unmap(const Hostname& host);
 	bool isMapped(const Hostname& hostname) const;
+	bool isValid() const;
 
-	const HostsGroup& getHostsGroup() const;
-	const AddressGroup& getAddressGroup() const;
+	const AddressGroup& addressGroup;
+	const HostsGroup& hostsGroup;
 
 private:
 	typedef std::map<const IpAddress, Hostnames> Container;
@@ -50,8 +43,6 @@ private:
 
 	void doMap(const Hostname& host, const IpAddress& addr);
 
-	const AddressGroup& addressGroup;
-	const HostsGroup& hostsGroup;
 	Hostnames unmapped;
 	Container container;
 };
@@ -62,14 +53,6 @@ inline void Mapping::map(const Hostname& host, const IpAddress& addr) {
 
 inline void Mapping::map(const IpAddress& addr, const Hostname& host) {
 	doMap(host, addr);
-}
-
-inline const HostsGroup& Mapping::getHostsGroup() const {
-	return hostsGroup;
-}
-
-inline const AddressGroup& Mapping::getAddressGroup() const {
-	return addressGroup;
 }
 
 } /* namespace helmet */

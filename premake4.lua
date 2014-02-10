@@ -6,8 +6,11 @@ DIR_LIB_RELEASE = DIR_BUILD .. "/release/lib"
 
 solution "helmet"
 	configurations { "debug", "release" }
-	flags { "FatalWarnings", "ExtraWarnings" }
-	location (DIR_BUILD)
+            flags { "FatalWarnings", "ExtraWarnings" }
+            location (DIR_BUILD)
+        
+        configuration { "linux" , "gmake" }
+            buildoptions { "-std=c++11 -pedantic" }
 	
 	configuration { "debug" }
 		defines { "_DEBUG" }
@@ -31,7 +34,7 @@ newaction {
    trigger     = "clean-ide",
    description = "Remove all IDE-specific files",
    execute = function ()
-      local ide_resources = {".cproject", ".settings/", ".classpath", ".externalToolBuilders/", ".project"}
+      local ide_resources = {".cproject", ".settings", ".classpath", ".externalToolBuilders", ".project"}
 		for i,res in ipairs(ide_resources) do
 			os.rmdir(res)
 		end
