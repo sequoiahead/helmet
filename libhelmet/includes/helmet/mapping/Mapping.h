@@ -31,8 +31,10 @@ public:
 
 	void unmap(const IpAddress& addr);
 	void unmap(const Hostname& host);
+	void enable(bool flag = true);
 	bool isMapped(const Hostname& hostname) const;
 	bool isValid() const;
+	bool isEnabled() const;
 
 	const AddressGroup& addressGroup;
 	const HostsGroup& hostsGroup;
@@ -45,6 +47,7 @@ private:
 
 	Hostnames unmapped;
 	Container container;
+	bool enabled;
 };
 
 inline void Mapping::map(const Hostname& host, const IpAddress& addr) {
@@ -53,6 +56,14 @@ inline void Mapping::map(const Hostname& host, const IpAddress& addr) {
 
 inline void Mapping::map(const IpAddress& addr, const Hostname& host) {
 	doMap(host, addr);
+}
+
+inline void Mapping::enable(bool flag) {
+	enabled = flag;
+}
+
+inline bool Mapping::isEnabled() const {
+	return enabled;
 }
 
 } /* namespace helmet */

@@ -6,7 +6,7 @@
 namespace helmet {
 
     Mapping::Mapping(const HostsGroup& hosts, const AddressGroup& addresses)
-                : addressGroup(addresses), hostsGroup(hosts), container() {
+                : addressGroup(addresses), hostsGroup(hosts), container(), enabled(false) {
         unmapped.insert(unmapped.begin(), hosts.begin(), hosts.end());
     }
 

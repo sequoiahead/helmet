@@ -6,11 +6,11 @@ DIR_LIB_RELEASE = DIR_BUILD .. "/release/lib"
 
 solution "helmet"
 	configurations { "debug", "release" }
-            flags { "FatalWarnings", "ExtraWarnings" }
-            location (DIR_BUILD)
+    flags { "FatalWarnings", "ExtraWarnings" }
+    location (DIR_BUILD)
         
-        configuration { "linux" , "gmake" }
-            buildoptions { "-std=c++11 -pedantic" }
+  configuration { "linux" , "gmake" }
+    buildoptions { "-std=c++11 -pedantic" }
 	
 	configuration { "debug" }
 		defines { "_DEBUG" }

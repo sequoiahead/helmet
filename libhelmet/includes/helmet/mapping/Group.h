@@ -46,7 +46,7 @@ private:
 
 template<typename Item>
 Group<Item>::Group(const std::string& name) :
-name(name), container() {
+		name(name), container() {
 }
 
 template<typename Item>

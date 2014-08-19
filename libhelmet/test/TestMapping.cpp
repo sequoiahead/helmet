@@ -53,6 +53,7 @@ namespace helmet {
         void testConstructor() {
             CPPUNIT_ASSERT(mapping->hostsGroup.name == GROUP_NAME_HOSTS);
             CPPUNIT_ASSERT(mapping->addressGroup.name == GROUP_NAME_ADDR);
+            CPPUNIT_ASSERT(!mapping->isEnabled());
         }
 
         void testCount() {

@@ -13,6 +13,9 @@ MappingWriter::MappingWriter(const std::string path)
 }
 
 void MappingWriter::write(const Mapping& mapping) {
+	if (!mapping.isEnabled()) {
+		return;
+	}
     fileHosts.open(pathHostsFile.c_str(), std::ofstream::out);
     if (!fileHosts.good()) {
             std::ios_base::failure e(std::string("Failed to open hosts file ").append(pathHostsFile));

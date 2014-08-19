@@ -4,6 +4,8 @@
 
 #include <helmet/io/MappingWriter.h>
 
+#include <cstdio>
+
 namespace helmet {
 
     class TestMappingWriter : public CppUnit::TestFixture {
@@ -11,6 +13,7 @@ namespace helmet {
         CPPUNIT_TEST(testConstructor);
         CPPUNIT_TEST(testWriter1);
         CPPUNIT_TEST(testWriterFail);
+        CPPUNIT_TEST(testWriterDisabled);
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -32,6 +35,8 @@ namespace helmet {
 			mapping->map("192.168.0.1"_a, "test1.com"_h);
 			mapping->map("192.168.0.1"_a, "test2.com"_h);
 			mapping->map("192.168.0.2"_a, "test3.com"_h);
+
+			std::remove(writablePath.c_str());
         }
 
         void tearDown() {
@@ -47,6 +52,7 @@ namespace helmet {
 
         void testWriter1() {
             MappingWriter writer(writablePath);
+            mapping->enable();
             writer.write(*mapping);
             
             std::ifstream file;
@@ -68,7 +74,16 @@ namespace helmet {
 
         void testWriterFail() {
         	MappingWriter writer(nonWritablePath);
+        	mapping->enable();
         	CPPUNIT_ASSERT_THROW( writer.write(*mapping), std::ios_base::failure );
+        }
+
+        void testWriterDisabled() {
+        	MappingWriter writer(writablePath);
+        	writer.write(*mapping);
+        	//checking if file does not exist
+        	std::ifstream file(writablePath);
+        	CPPUNIT_ASSERT(!file.good());
         }
 
     private:
