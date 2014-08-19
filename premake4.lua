@@ -24,7 +24,7 @@ solution "helmet"
 	
 	include "libhelmet"
 	include "ui-cli"
-	include "ui-gtk"
+	include "ui-wxw"
 
 if _ACTION == "clean" then
 	os.rmdir(DIR_BUILD)

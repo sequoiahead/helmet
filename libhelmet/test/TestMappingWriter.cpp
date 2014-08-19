@@ -10,18 +10,34 @@ namespace helmet {
         CPPUNIT_TEST_SUITE(TestMappingWriter);
         CPPUNIT_TEST(testConstructor);
         CPPUNIT_TEST(testWriter1);
+        CPPUNIT_TEST(testWriterFail);
         CPPUNIT_TEST_SUITE_END();
 
     public:
-
         static std::string nonWritablePath;
         static std::string writablePath;
 
         void setUp() {
+        	groupHosts = new HostsGroup("Hosts1");
+			groupAddr = new AddressGroup("Addrs1");
+			mapping = new Mapping(*groupHosts, *groupAddr);
+
+			groupHosts->add("test1.com"_h);
+			groupHosts->add("test2.com"_h);
+			groupHosts->add("test3.com"_h);
+
+			groupAddr->add("192.168.0.1"_a);
+			groupAddr->add("192.168.0.2"_a);
+
+			mapping->map("192.168.0.1"_a, "test1.com"_h);
+			mapping->map("192.168.0.1"_a, "test2.com"_h);
+			mapping->map("192.168.0.2"_a, "test3.com"_h);
         }
 
         void tearDown() {
-
+        	delete mapping;
+        	delete groupAddr;
+        	delete groupHosts;
         }
 
         void testConstructor() {
@@ -30,23 +46,8 @@ namespace helmet {
         }
 
         void testWriter1() {
-            HostsGroup groupHosts("Hosts1");
-            AddressGroup groupAddr("Addrs1");
-            Mapping mapping(groupHosts, groupAddr);
-
-            groupHosts.add("test1.com"_h);
-            groupHosts.add("test2.com"_h);
-            groupHosts.add("test3.com"_h);
-
-            groupAddr.add("192.168.0.1"_a);
-            groupAddr.add("192.168.0.2"_a);
-
-            mapping.map("192.168.0.1"_a, "test1.com"_h);
-            mapping.map("192.168.0.1"_a, "test2.com"_h);
-            mapping.map("192.168.0.2"_a, "test3.com"_h);
-
             MappingWriter writer(writablePath);
-            writer.write(mapping);
+            writer.write(*mapping);
             
             std::ifstream file;
             file.open(writablePath.c_str());
@@ -65,8 +66,15 @@ namespace helmet {
             file.close();
         }
 
+        void testWriterFail() {
+        	MappingWriter writer(nonWritablePath);
+        	CPPUNIT_ASSERT_THROW( writer.write(*mapping), std::ios_base::failure );
+        }
+
     private:
-        MappingWriter* writer;
+        HostsGroup *groupHosts;
+        AddressGroup *groupAddr;
+        Mapping *mapping;
     };
 
     std::string TestMappingWriter::nonWritablePath = "/etc/hosts";
